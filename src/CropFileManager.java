@@ -12,23 +12,23 @@ public class CropFileManager {
 
             for (String line : lines) {
                 String[] parts = line.split(", ");
+                    if (parts[1].equalsIgnoreCase("fruit") &&
+                            parts[0].equals(fruit.getName()) &&
+                            Double.parseDouble(parts[2]) == fruit.getWeight() &&
+                            parts[3].equals(fruit.getCultivatedSeason()) &&
+                            parts[4].equals(fruit.getTaste()) &&
+                            Double.parseDouble(parts[5]) == fruit.getPrice()) {
 
-                if (parts[1].equalsIgnoreCase("fruit") &&
-                        parts[0].equals(fruit.getName()) &&
-                        Double.parseDouble(parts[2]) == fruit.getWeight() &&
-                        parts[3].equals(fruit.getCultivatedSeason()) &&
-                        parts[4].equals(fruit.getTaste()) &&
-                        Double.parseDouble(parts[5]) == fruit.getPrice()) {
-
-                    if (newKeeperId != null) {
-                        String updatedLine = parts[0] + ", " + parts[1] + ", " + parts[2] + ", " +
-                                parts[3] + ", " + parts[4] + ", " + parts[5] + ", " + newKeeperId;
-                        updatedLines.add(updatedLine);
+                        if (newKeeperId != null) {
+                            String updatedLine = parts[0] + ", " + parts[1] + ", " + parts[2] + ", " +
+                                    parts[3] + ", " + parts[4] + ", " + parts[5] + ", " + newKeeperId;
+                            updatedLines.add(updatedLine);
+                        }
+                    } else {
+                        updatedLines.add(line);
                     }
-                } else {
-                    updatedLines.add(line); // Eşleşmeyen tüm satırları kopyala
                 }
-            }
+
 
             Files.write(Paths.get("src/Crops.txt"), updatedLines);
 
@@ -61,6 +61,5 @@ public class CropFileManager {
         } catch (IOException e) {
             System.err.println("Error adding crop to Crops.txt: " + e.getMessage());
         }
-
     }
 }
