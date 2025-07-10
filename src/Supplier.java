@@ -62,7 +62,7 @@ public class Supplier implements CropKeeper {
             budget -= fruit.getPrice();
             cropList.add(fruit);
             fruit.setKeeper(this);
-            updateCropsFile(fruit, this.id);
+            CropFileManager.updateCropsFile(fruit, this.id);
         }
     }
 
@@ -81,7 +81,7 @@ public class Supplier implements CropKeeper {
                 throw new CanNotBeStoredException("Fruit must be assigned to a store.");
             } else {
                 String storeId = ((Store) newKeeper).getId();
-                updateCropsFile(fruit, storeId);
+                CropFileManager.updateCropsFile(fruit, storeId);
             }
         }
     }

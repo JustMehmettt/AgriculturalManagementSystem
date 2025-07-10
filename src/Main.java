@@ -220,9 +220,12 @@ public class Main {
 
         try {
             selectedSupplier.buyCrop(selectedFruit);
-            selectedStore.exportCrop(fruitName);
+            selectedStore.getFruitList().remove(selectedFruit);
+            double areaToFree = selectedFruit.getWeight() / selectedStore.getKGperSquareMeter();
+            selectedStore.setUsedCapacityArea(selectedStore.getUsedCapacityArea() - areaToFree);
+
             System.out.println("Fruit successfully bought.");
-        } catch (SupplierHasNotEnoughMoneyException | FruitNotFoundException e){
+        } catch (SupplierHasNotEnoughMoneyException e){
             System.err.println("Error buying fruit: " + e.getMessage());
         }
     }
@@ -381,6 +384,7 @@ public class Main {
         }
 
         selectedSupplier.getCropList().remove(cropToRemove);
+        CropFileManager.updateCropsFile((Fruit) cropToRemove, null);
         System.out.println("Crop successfully removed.");
     }
 
@@ -432,6 +436,7 @@ public class Main {
                     if (supplier.getId().equals(supplierId)) {
                         try {
                             supplier.buyCrop(newFruit);
+                            CropFileManager.addCropToFile(newFruit, supplier.getId());
                             System.out.println("Fruit successfully added to supplier.");
                         } catch (SupplierHasNotEnoughMoneyException e) {
                             System.err.println("Error adding fruit: " + e.getMessage());
@@ -453,6 +458,7 @@ public class Main {
                     if (store.getId().equals(storeId)) {
                         try {
                             store.importCrop(newFruit);
+                            CropFileManager.addCropToFile(newFruit, store.getId());
                             System.out.println("Fruit successfully added to store.");
                         } catch (CapacityNotEnoughException e) {
                             System.err.println("Error adding fruit: " + e.getMessage());

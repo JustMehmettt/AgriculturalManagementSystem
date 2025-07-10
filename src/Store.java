@@ -59,9 +59,9 @@ public class Store implements CropKeeper{
         setUsedCapacityArea(getUsedCapacityArea() + fruit.getWeight() / getKGperSquareMeter());
     }
 
-    public void exportCrop(String name) throws FruitNotFoundException{
+    public void exportCrop(String name) throws FruitNotFoundException {
         Fruit existingFruit = null;
-        for (Fruit f : getFruitList()){
+        for (Fruit f : getFruitList()) {
             if(f.getName().equals(name)) {
                 existingFruit = f;
                 break;
@@ -73,6 +73,7 @@ public class Store implements CropKeeper{
 
         getFruitList().remove(existingFruit);
         setUsedCapacityArea(getUsedCapacityArea() - existingFruit.getWeight() / getKGperSquareMeter());
+        CropFileManager.updateCropsFile(existingFruit, null);
     }
 
     public String getId() {
