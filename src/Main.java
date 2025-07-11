@@ -106,14 +106,12 @@ public class Main {
         if (keeperId.startsWith("1")){
             for(Supplier supplier : suppliers){
                 if(supplier.getId().equals(keeperId)){
-                    try {
-                        supplier.buyCrop(fruit);
-                    } catch (SupplierHasNotEnoughMoneyException e){
-                        System.err.println("Error assigning fruit to supplier: " + e.getMessage());
-                    } break;
+                    supplier.getCropList().add(fruit);
+                    break;
                 }
             }
         }
+
         else if (keeperId.startsWith("5")){
             for (Store store : stores){
                 if(store.getId().equals(keeperId)){
@@ -159,6 +157,22 @@ public class Main {
         }
 
         System.out.println("Supplier not found.");
+        return null;
+    }
+
+    private static Fruit promptFruit(){
+
+
+        System.out.print("\nEnter fruit name: ");
+        String fruitName = scanner.nextLine();
+
+        for (Crop crop : crops){
+            if (!(crop instanceof Fruit fruit)) continue;
+            if(fruit.getName().equals(fruitName)){
+                return fruit;
+            }
+        }
+        System.out.println("Fruit not found.");
         return null;
     }
 
@@ -287,20 +301,17 @@ public class Main {
     }
 
     private static void removeFruitFromStore(){
-        System.out.println("\nAvailable stores:");
-        for (Store store : stores){
-            System.out.println("\n" + store.getName() + " ID: " + store.getId());
-            System.out.println("Fruits:");
-            for (Fruit fruit : store.getFruitList()){
-                System.out.println(fruit.toString());
-            }
-        }
 
         Store selectedStore = promptStore();
         if (selectedStore == null) return;
 
-        System.out.print("\nEnter fruit name: ");
-        String fruitName = scanner.nextLine();
+        System.out.println("\nAvailable fruits in " + selectedStore.getName() + ":\n");
+        for (Fruit fruit : selectedStore.getFruitList()){
+            System.out.println(fruit.toString());
+        }
+
+        String fruitName = String.valueOf(promptFruit());
+        if (fruitName == null) return;
 
         try {
             selectedStore.exportCrop(fruitName);
