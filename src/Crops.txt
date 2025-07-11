@@ -7,4 +7,4 @@ GreenApple, fruit, 25, winter, sweet, 6, 1133
 Orange, fruit, 20, autumn, sour, 4, 1322
 GreenApple, fruit, 5, winter, sweet, 6, 5343
 GreenBeans, vegetable, 22, Bursa, 1322
-Banana, fruit, 63, summer, sweet, 12, 1133
+Banana, fruit, 63, summer, sweet, 12, 5343

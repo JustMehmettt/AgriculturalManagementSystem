@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
-import java.nio.file.*;
 
 public class Supplier implements CropKeeper {
     private final String name;
@@ -22,35 +20,6 @@ public class Supplier implements CropKeeper {
     public void howToStore() {
         System.out.println("Vegetables are stored in sheds, not listed.");
         System.out.println("Fruits are stored in large refrigerated cooler rooms.");
-    }
-
-    private void updateCropsFile(Fruit fruit, String newKeeperId) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get("src/Crops.txt"));
-            List<String> updatedLines = new ArrayList<>(lines);
-            for (int i = 0; i < lines.size(); i++) {
-                String[] parts = lines.get(i).split(", ");
-
-                if (parts[1].equalsIgnoreCase("fruit") &&
-                    parts[0].equals(fruit.getName()) &&
-                    Double.parseDouble(parts[2]) == fruit.getWeight() && 
-                    parts[3].equals(fruit.getCultivatedSeason()) && 
-                    parts[4].equals(fruit.getTaste()) && 
-                    Double.parseDouble(parts[5]) == fruit.getPrice()) {
-
-                    String updatedLine = parts[0] + ", " + parts[1] + ", " + parts[2] + ", " +
-                                         parts[3] + ", " + parts[4] + ", " + parts[5] + ", " + newKeeperId;
-                    
-                    updatedLines.set(i, updatedLine);
-                    break;
-                }
-            }
-
-            Files.write(Paths.get("src/Crops.txt"), updatedLines);
-
-        } catch (IOException e) {
-            System.err.println("Error updating Crops.txt: " + e.getMessage());
-        }
     }
 
     public void buyCrop(Crop c) throws SupplierHasNotEnoughMoneyException {

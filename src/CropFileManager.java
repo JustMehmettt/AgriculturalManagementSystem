@@ -46,8 +46,7 @@ public class CropFileManager {
             List<String> updatedLines = new ArrayList<>(lines);
 
 
-            if (crop instanceof Fruit) {
-                Fruit fruit = (Fruit) crop;
+            if (crop instanceof Fruit fruit) {
                 String fruitLine = fruit.getName() + ", fruit, " + fruit.getWeight() + ", " +
                         fruit.getCultivatedSeason() + ", " + fruit.getTaste() + ", " +
                         fruit.getPrice() + ", " + keeperId;

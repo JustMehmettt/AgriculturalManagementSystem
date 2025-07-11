@@ -127,6 +127,41 @@ public class Main {
         }
     }
 
+    private static Store promptStore(){
+
+        System.out.println("\nAvailable stores:");
+        for(Store store : stores){
+            System.out.println(store.getName() + " ID: " + store.getId());
+        }
+
+        System.out.print("\nEnter store ID: ");
+        String storeId = scanner.nextLine();
+
+        for (Store store : stores){
+            if(store.getId().equals(storeId)){
+                return store;
+            }
+        }
+
+        System.out.println("Store not found.");
+        return null;
+    }
+
+    private static Supplier promptSupplier(){
+
+        System.out.print("\nEnter supplier ID: ");
+        String supplierId = scanner.nextLine();
+
+        for (Supplier supplier : suppliers){
+            if(supplier.getId().equals(supplierId)){
+                return supplier;
+            }
+        }
+
+        System.out.println("Supplier not found.");
+        return null;
+    }
+
     private static void displaySuppliers(){
         System.out.println("\nSuppliers:");
         for (Supplier supplier : suppliers){
@@ -156,25 +191,9 @@ public class Main {
     }
 
     private static void buyFruitForSupplier(){
-        System.out.println("\nAvailable stores:");
-        for(Store store : stores){
-            System.out.println(store.getName() + " ID: " + store.getId());
-        }
-        System.out.print("\nEnter store ID: ");
-        String storeId = scanner.nextLine();
 
-        Store selectedStore = null;
-        for (Store store : stores){
-            if(store.getId().equals(storeId)){
-                selectedStore = store;
-                break;
-            }
-        }
-
-        if (selectedStore == null){
-            System.out.println("Store not found.");
-            return;
-        }
+        Store selectedStore = promptStore();
+        if (selectedStore == null) return;
 
         System.out.println("\nAvailable fruits in " + selectedStore.getName());
         for (Fruit fruit : selectedStore.getFruitList()){
@@ -221,7 +240,7 @@ public class Main {
         try {
             selectedSupplier.buyCrop(selectedFruit);
             selectedStore.getFruitList().remove(selectedFruit);
-            double areaToFree = selectedFruit.getWeight() / selectedStore.getKGperSquareMeter();
+            double areaToFree = selectedFruit.getWeight() * selectedStore.getKGperSquareMeter();
             selectedStore.setUsedCapacityArea(selectedStore.getUsedCapacityArea() - areaToFree);
             SupplierFileManager.updateSupplierFile(selectedSupplier, selectedSupplier.getBudget() - selectedFruit.getPrice());
 
@@ -232,32 +251,11 @@ public class Main {
     }
 
     private static void sellFruitFromSupplier() {
-        System.out.println("\nAvailable suppliers:");
-        for (Supplier supplier : suppliers) {
-            System.out.println("\n" + supplier.getName() + " ID: " + supplier.getId());
-            System.out.println("Crops:");
-            for (Crop crop : supplier.getCropList()) {
-                if (crop instanceof Fruit) {
-                    System.out.println(crop.toString());
-                }
-            }
-        }
 
-        System.out.print("\nEnter supplier ID who will sell this fruit: ");
-        String supplierId = scanner.nextLine();
+        displaySuppliers();
 
-        Supplier selectedSupplier = null;
-        for (Supplier supplier : suppliers) {
-            if (supplier.getId().equals(supplierId)) {
-                selectedSupplier = supplier;
-                break;
-            }
-        }
-
-        if (selectedSupplier == null) {
-            System.out.println("Supplier not found.");
-            return;
-        }
+        Supplier selectedSupplier = promptSupplier();
+        if (selectedSupplier == null) return;
 
         System.out.print("\nEnter fruit name to sell: ");
         String fruitName = scanner.nextLine();
@@ -275,25 +273,8 @@ public class Main {
             return;
         }
 
-        System.out.print("\nAvailable stores: \n");
-        for (Store store : stores)
-            System.out.println(store.getName() + " ID: " + store.getId());
-
-        System.out.print("\nEnter store ID who will sell the fruit: ");
-        String storeId = scanner.nextLine();
-
-        Store selectedStore = null;
-        for (Store store : stores) {
-            if (store.getId().equals(storeId)) {
-                selectedStore = store;
-                break;
-            }
-        }
-
-        if (selectedStore == null) {
-            System.out.println("Store not found.");
-            return;
-        }
+        Store selectedStore = promptStore();
+        if (selectedStore == null) return;
 
         try {
             selectedFruit.setKeeper(selectedStore);
@@ -315,23 +296,10 @@ public class Main {
             }
         }
 
-        System.out.print("\nEnter store ID: ");
-        String storeId = scanner.nextLine();
+        Store selectedStore = promptStore();
+        if (selectedStore == null) return;
 
-        Store selectedStore = null;
-        for (Store store : stores){
-            if(store.getId().equals(storeId)){
-                selectedStore = store;
-                break;
-            }
-        }
-
-        if (selectedStore == null){
-            System.out.println("Store not found.");
-            return;
-        }
-
-        System.out.print("\nEnter fruit name to remove: ");
+        System.out.print("\nEnter fruit name: ");
         String fruitName = scanner.nextLine();
 
         try {
@@ -352,23 +320,10 @@ public class Main {
             }
         }
 
-        System.out.print("\nEnter supplier ID who will remove this crop: ");
-        String supplierId = scanner.nextLine();
+        Supplier selectedSupplier = promptSupplier();
+        if (selectedSupplier == null) return;
 
-        Supplier selectedSupplier = null;
-        for (Supplier supplier : suppliers){
-            if(supplier.getId().equals(supplierId)){
-                selectedSupplier = supplier;
-                break;
-            }
-        }
-
-        if (selectedSupplier == null){
-            System.out.println("Supplier not found.");
-            return;
-        }
-
-        System.out.print("\nEnter crop name to remove: ");
+        System.out.print("\nEnter crop name: ");
         String cropName = scanner.nextLine();
 
         Crop cropToRemove = null;
@@ -513,5 +468,4 @@ public class Main {
             System.out.println(store.getName() + " ID: " + store.getId() + "\nMax capacity area: " + store.getMaxCapacityArea() + "\nUsed capacity area: " + store.getUsedCapacityArea() + "\n");
         }
     }
-
 }
