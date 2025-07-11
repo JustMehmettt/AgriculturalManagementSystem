@@ -68,7 +68,7 @@ public class Main {
             String line;
             while ((line = reader.readLine()) != null){
                 String[] parts = line.split(", ");
-                Store store = new Store (parts[1], parts[0], Double.parseDouble(parts[2]));
+                Store store = new Store (parts[1], parts[0], Double.parseDouble(parts[2]), Double.parseDouble(parts[3]));
                 stores.add(store);
             }
         }
@@ -255,7 +255,7 @@ public class Main {
         try {
             selectedSupplier.buyCrop(selectedFruit);
             selectedStore.getFruitList().remove(selectedFruit);
-            double areaToFree = selectedFruit.getWeight() * selectedStore.getKGperSquareMeter();
+            double areaToFree = selectedFruit.getWeight() / selectedStore.getKGperSquareMeter();
             selectedStore.setUsedCapacityArea(selectedStore.getUsedCapacityArea() - areaToFree);
             SupplierFileManager.updateSupplierFile(selectedSupplier, selectedSupplier.getBudget() - selectedFruit.getPrice());
 
@@ -490,14 +490,14 @@ public class Main {
     }
 
     private static void showRemainingBudget() {
-        System.out.println("\nRemaining suppliers budget:");
+        System.out.println("\nRemaining suppliers budget:\n");
         for (Supplier supplier : suppliers){
             System.out.println(supplier.getName() + " ID: " + supplier.getId() + "\nBudget: " + supplier.getBudget() + "\n");
         }
     }
 
     private static void showRemainingCapacity(){
-        System.out.println("\nRemaining stores capacity:");
+        System.out.println("\nRemaining stores capacity:\n");
         for (Store store : stores){
             System.out.println(store.getName() + " ID: " + store.getId() + "\nMax capacity area: " + store.getMaxCapacityArea() + "\nUsed capacity area: " + store.getUsedCapacityArea() + "\n");
         }

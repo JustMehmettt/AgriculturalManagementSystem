@@ -9,14 +9,14 @@ public class Store implements CropKeeper{
     private final double KGperSquareMeter;
     private final List<Fruit> fruitList;
 
-    public Store(String id, String name, double maxCapacityArea) {
+    public Store(String id, String name, double maxCapacityArea, double KGperSquareMeter) {
         if (!id.startsWith("5"))
             throw new IllegalArgumentException("Store ID must start with 5.");
         this.id = id;
         this.name = name;
         this.maxCapacityArea = maxCapacityArea;
         this.usedCapacityArea = 0;
-        this.KGperSquareMeter = 10;
+        this.KGperSquareMeter = KGperSquareMeter;
         this.fruitList = new ArrayList<>();
     }
 
