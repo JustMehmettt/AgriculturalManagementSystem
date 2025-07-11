@@ -28,7 +28,7 @@ public class Supplier implements CropKeeper {
                 throw new SupplierHasNotEnoughMoneyException("Supplier has not enough money.");
             }
 
-            budget -= fruit.getPrice();
+            budget -= fruit.getPrice() * fruit.getWeight();
             cropList.add(fruit);
             fruit.setKeeper(this);
             CropFileManager.updateCropsFile(fruit, this.id);
