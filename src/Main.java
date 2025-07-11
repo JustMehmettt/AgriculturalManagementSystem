@@ -292,8 +292,8 @@ public class Main {
         if (selectedStore == null) return;
 
         try {
-            selectedFruit.setKeeper(selectedStore);
             selectedSupplier.sellCrop(selectedFruit);
+            selectedFruit.setKeeper(selectedStore);
             selectedStore.importCrop(selectedFruit);
             System.out.println("Fruit successfully sold.");
         } catch (FruitNotFoundException | CanNotBeStoredException | CapacityNotEnoughException e) {
@@ -426,6 +426,7 @@ public class Main {
                     if (supplier.getId().equals(supplierId)) {
                         try {
                             supplier.buyCrop(newFruit);
+                            SupplierFileManager.updateSupplierFile(supplier, supplier.getBudget());
                             CropFileManager.addCropToFile(newFruit, supplier.getId());
                             System.out.println("Fruit successfully added to supplier.");
                         } catch (SupplierHasNotEnoughMoneyException e) {
@@ -439,7 +440,6 @@ public class Main {
                 System.out.println("\nAvailable stores:");
                 for (Store store : stores)
                     System.out.println(store.getName() + " ID: " + store.getId());
-
 
                 System.out.print("\nEnter store ID: ");
                 String storeId = scanner.nextLine();
@@ -477,7 +477,8 @@ public class Main {
                     if (supplier.getId().equals(supplierId)) {
                         supplier.getCropList().add(newVegetable);
                         CropFileManager.addCropToFile(newVegetable, supplier.getId());
-                        System.err.println("Vegetable successfully added to supplier.");
+                        SupplierFileManager.updateSupplierFile(supplier, supplier.getBudget());
+                        System.out.println("Vegetable successfully added to supplier.\n");
                         return;
                     }
                 }
