@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,8 @@ import java.util.List;
 public class CropFileManager {
     public static void updateCropsFile(Fruit fruit, String newKeeperId) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get("src/Crops.txt"));
+            Path path = Paths.get("src/Crops.txt");
+            List<String> lines = Files.readAllLines(path);
             List<String> updatedLines = new ArrayList<>();
 
             for (String line : lines) {
@@ -30,7 +32,7 @@ public class CropFileManager {
                 }
 
 
-            Files.write(Paths.get("src/Crops.txt"), updatedLines);
+            Files.write(path, updatedLines);
 
         } catch (IOException e) {
             System.err.println("Error updating Crops.txt: " + e.getMessage());
@@ -39,7 +41,8 @@ public class CropFileManager {
 
     public static void addCropToFile(Crop crop, String keeperId){
         try {
-            List<String> lines = Files.readAllLines(Paths.get("src/Crops.txt"));
+            Path path = Paths.get("src/Crops.txt");
+            List<String> lines = Files.readAllLines(path);
             List<String> updatedLines = new ArrayList<>(lines);
 
 
@@ -55,7 +58,7 @@ public class CropFileManager {
                 updatedLines.add(vegetableLine);
             }
 
-            Files.write(Paths.get("src/Crops.txt"), updatedLines);
+            Files.write(path, updatedLines);
 
 
         } catch (IOException e) {
