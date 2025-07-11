@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -168,7 +169,7 @@ public class Main {
 
         for (Crop crop : crops){
             if (!(crop instanceof Fruit fruit)) continue;
-            if(fruit.getName().equals(fruitName)){
+            if(fruit.getName().equalsIgnoreCase(fruitName)){
                 return fruit;
             }
         }
@@ -310,11 +311,11 @@ public class Main {
             System.out.println(fruit.toString());
         }
 
-        String fruitName = String.valueOf(promptFruit());
-        if (fruitName == null) return;
+        Fruit f = promptFruit();
+        if (f == null) return;
 
         try {
-            selectedStore.exportCrop(fruitName);
+            selectedStore.exportCrop(f.getName());
             System.out.println("Fruit successfully removed.");
         } catch (FruitNotFoundException e){
             System.err.println("Error removing fruit: " + e.getMessage());
@@ -367,9 +368,20 @@ public class Main {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter weight (kg): ");
-        double weight = scanner.nextDouble();
-        scanner.nextLine();
+        double weight = 0;
+        boolean valid = false;
+
+        while(!valid){
+            System.out.print("Enter weight (kg): ");
+            try {
+                weight = scanner.nextDouble();
+                valid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            } finally {
+                scanner.nextLine();
+            }
+        }
 
         System.out.print("Enter cultivated season: ");
         String season = scanner.nextLine();
@@ -385,9 +397,20 @@ public class Main {
             System.out.print("Enter taste: ");
             String taste = scanner.nextLine();
 
-            System.out.print("Enter price: ");
-            double price = scanner.nextDouble();
-            scanner.nextLine();
+            double price = 0;
+            valid = false;
+
+            while (!valid){
+                System.out.print("Enter price: ");
+                try {
+                    price = scanner.nextDouble();
+                    valid = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                } finally {
+                    scanner.nextLine();
+                }
+            }
 
             Fruit newFruit = new Fruit(name, weight, season, taste, price);
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/CanNotBeStoredException.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/CapacityNotEnoughException.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Crop.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/CropFileManager.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/CropKeeper.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Fruit.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/FruitNotFoundException.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Main.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Store.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Supplier.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/SupplierFileManager.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/SupplierHasNotEnoughMoneyException.java;C:/Users/Mehmet/IdeaProjects/AgriculturalManagementSystem/src/Vegetable.java" />
+  </component>
+</project>
